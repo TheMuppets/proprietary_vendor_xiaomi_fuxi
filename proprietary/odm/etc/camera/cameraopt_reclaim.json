@@ -5,16 +5,21 @@
                 "name": "kill_policy",
                 "config": {
                     "oom_level": {
-                        "51200": 0,
-                        "89600": 100,
-                        "128000": 200,
-                        "154200": 251,
-                        "200000": 700,
-                        "262144": 702,
-                        "393216": 800
+                        "512000": 51,
+                        "614400": 100,
+                        "819200": 200,
+                        "1024000": 251,
+                        "1536000": 700,
+                        "1572864": 702,
+                        "1843200": 800
+                    },
+                    "free_mem": {
+                        "204800": 702,
+                        "327680": 800,
+                        "512000": 900
                     },
                     "some_psi": {
-                        "40": 50,
+                        "99": 50,
                         "30": 51,
                         "28": 101,
                         "25": 251,
@@ -22,15 +27,6 @@
                         "16": 702,
                         "12": 800,
                         "10": 900
-                    },
-                    "drop_threshold" :  {
-                        "51": 0,
-                        "101": 2,
-                        "251": 2,
-                        "701": 3,
-                        "702": 4,
-                        "800": 5,
-                        "900": 6
                     },
                     "deepkill_policy" : {
                         "200": 4,
@@ -45,12 +41,12 @@
             "reclaim_once": {
                 "psi_monitor": [
                     {
-                        "enable": true,
+                        "enable": false,
                         "target": 307200,
                         "cpu_psi_target": 50,
                         "trigger": {
                             "free": "0:204800",
-                            "cache": "2048000:-1"
+                            "cache": "1024000:-1"
                         }
                     }
                 ],
@@ -68,7 +64,7 @@
                 "3rdcam_activity_start_event":[
                     {
                         "enable": false,
-                        "target": "307200",
+                        "target": 307200,
                         "cpu_psi_target": 50,
                         "trigger": {
                             "free": "0:307200",
@@ -79,10 +75,76 @@
                 "miuicam_activity_start_event":[
                     {
                         "enable": false,
-                        "target": "204800",
+                        "target": 204800,
                         "cpu_psi_target": 50,
                         "trigger":{
                             "free": "0:204800",
+                            "cache": "2048000:-1"
+                        }
+                    }
+                ],
+                "miuicam_capture_event":[
+                    {
+                        "enable": false,
+                        "target": 307200,
+                        "cpu_psi_target": 65,
+                        "trigger":{
+                            "free": "0:307200",
+                            "availablemem": "1536000:-1"
+                        }
+                    }
+                ],
+                "miuicam_activity_zoom_event":[
+                    {
+                        "enable": false,
+                        "target": 307200,
+                        "cpu_psi_target": 50,
+                        "trigger":{
+                            "free": "0:204800",
+                            "cache": "2048000:-1"
+                        }
+                    }
+                ],
+                "live_motion_psi_monitor":[
+                    {
+                        "enable": false,
+                        "target": 512000,
+                        "cpu_psi_target": 55,
+                        "trigger": {
+                            "free": "0:512000",
+                            "cache": "1024000:-1"
+                        }
+                    }
+                ],
+                "200M_psi_monitor":[
+                    {
+                        "enable": false,
+                        "target": 512000,
+                        "cpu_psi_target": 55,
+                        "trigger": {
+                            "free": "0:512000",
+                            "cache": "1024000:-1"
+                        }
+                    }
+                ],
+                "miuicam_video_switch_event":[
+                    {
+                        "enable": false,
+                        "target": 614400,
+                        "cpu_psi_target": 20,
+                        "trigger":{
+                            "free": "0:614400",
+                            "cache": "2048000:-1"
+                        }
+                    }
+                ],
+                "video_4k_dolby_event":[
+                    {
+                        "enable": false,
+                        "target": 614400,
+                        "cpu_psi_target": 20,
+                        "trigger":{
+                            "free": "0:614400",
                             "cache": "2048000:-1"
                         }
                     }
@@ -105,8 +167,7 @@
                         "cpu_psi_target": 50,
                         "kill_level": 0,
                         "trigger": {
-                            "free": "0:153600",
-                            "some_mem_psi": "15:-1"
+                            "some_mem_psi": "12:-1"
                         }
                     }
                 ]
@@ -115,8 +176,8 @@
                 "miuicam_activity_start_event":[
                     {
                         "enable": false,
-                        "free_target": "1024000",
-                        "target": "2867200",
+                        "free_target": 1024000,
+                        "target": 2867200,
                         "kill_level": 0,
                         "trigger":{
                             "availablemem": "0:-1"
@@ -126,8 +187,8 @@
                 "miuicam_open_event":[
                     {
                         "enable": true,
-                        "free_target": "1024000",
-                        "target": "2867200",
+                        "free_target": 1024000,
+                        "target": 2867200,
                         "kill_level": 0,
                         "trigger":{
                             "availablemem": "0:-1"
@@ -137,19 +198,30 @@
                 "miuicam_capture_event":[
                     {
                         "enable": false,
-                        "free_target": "204800",
-                        "target": "1228800",
+                        "free_target": 409600,
+                        "target": 1228800,
                         "kill_level": 0,
                         "trigger":{
-                            "availablemem": "0:1228800"
+                            "availablemem": "0:-1"
                         }
                     }
                 ],
                 "miuicam_video_switch_event":[
                     {
                         "enable": false,
-                        "free_target": "614400",
-                        "target": "1843200",
+                        "free_target": 614400,
+                        "target": 1843200,
+                        "kill_level": 0,
+                        "trigger":{
+                            "availablemem": "0:-1"
+                        }
+                    }
+                ],
+                "video_4k_dolby_event":[
+                    {
+                        "enable": false,
+                        "free_target": 614400,
+                        "target": 1843200,
                         "kill_level": 0,
                         "trigger":{
                             "availablemem": "0:-1"
@@ -159,8 +231,8 @@
                 "3rdcam_open_event":[
                     {
                         "enable": true,
-                        "free_target": "512000",
-                        "target": "2252800",
+                        "free_target": 512000,
+                        "target": 2252800,
                         "kill_level": 0,
                         "trigger": {
                             "availablemem": "0:-1"
@@ -170,11 +242,132 @@
                 "3rdcam_activity_start_event":[
                     {
                         "enable": false,
-                        "free_target": "512000",
-                        "target": "2048000",
+                        "free_target": 512000,
+                        "target": 2252800,
                         "kill_level": 0,
                         "trigger": {
                             "availablemem": "0:-1"
+                        }
+                    }
+                ],
+                "miuicam_activity_zoom_event":[
+                    {
+                        "enable": false,
+                        "free_target": 307200,
+                        "kill_level": 0,
+                        "trigger":{
+                            "availablemem": "0:-1"
+                        }
+                    }
+                ],
+                "live_motion_scene_event":[
+                    {
+                        "enable": false,
+                        "free_target": 716800,
+                        "target": 2867200,
+                        "cpu_psi_target": 55,
+                        "trigger": {
+                            "free": "0:716800",
+                            "cache": "1024000:-1"
+                        }
+                    }
+                ],
+                "200M_scene_event":[
+                    {
+                        "enable": false,
+                        "free_target": 716800,
+                        "target": 2867200,
+                        "cpu_psi_target": 55,
+                        "trigger": {
+                            "free": "0:716800",
+                            "cache": "1024000:-1"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "CameraReclaim_8Gmem": {
+        "killonce_configs" : [
+            {
+                "name": "kill_policy",
+                "config": {
+                    "oom_level": {
+                        "512000": 51,
+                        "614400": 100,
+                        "819200": 200,
+                        "1024000": 251,
+                        "1536000": 700,
+                        "1572864": 702,
+                        "1843200": 800
+                    },
+                    "free_mem": {
+                        "204800": 702,
+                        "327680": 800,
+                        "512000": 900
+                    },
+                    "some_psi": {
+                        "99": 50,
+                        "45": 51,
+                        "35": 101,
+                        "25": 251,
+                        "20": 701,
+                        "16": 702,
+                        "12": 800,
+                        "10": 900
+                    },
+                    "deepkill_policy" : {
+                        "200": 4,
+                        "101": 8,
+                        "51": 16,
+                        "50": 32
+                    }
+                }
+            }
+        ],
+        "ReclaimActions": {
+            "kill_target":{
+                "miuicam_open_event":[
+                    {
+                        "enable": true,
+                        "free_target": 2048000,
+                        "target": 2867200,
+                        "kill_level": 0,
+                        "trigger":{
+                            "availablemem": "0:-1"
+                        }
+                    }
+                ],
+                "miuicam_capture_event":[
+                    {
+                        "enable": true,
+                        "free_target": 409600,
+                        "target": 1228800,
+                        "kill_level": 0,
+                        "trigger":{
+                            "availablemem": "0:-1"
+                        }
+                    }
+                ]
+            },
+            "kill_once":{
+                "psi_monitor": [
+                    {
+                        "enable": true,
+                        "kill_level": 0,
+                        "cpu_psi_target": 50,
+                        "trigger": {
+                            "free": "0:307200",
+                            "cache": "0:1843200",
+                            "some_mem_psi": "1:-1"
+                        }
+                    },
+                    {
+                        "enable": true,
+                        "cpu_psi_target": 50,
+                        "kill_level": 0,
+                        "trigger": {
+                            "some_mem_psi": "12:-1"
                         }
                     }
                 ]

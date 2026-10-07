@@ -241,6 +241,14 @@ enableSHDR1ExpInlineSFE=FALSE
 #SHDR =1 ; MFHDR =2
 VideoHDRPreferredMode=2
 
+# 00000001 rear default enable
+# 00000010 front default enable
+# 00000100 rear support flash
+# 00001000 front support flash
+# 00010000 needed remove rear HDR icon
+# 00100000 needed remove front HDR icon
+VideoHDRSupportFeature=4
+
 #enablelogformat
 isVideoLogformatSupported=TRUE
 #support 10bit
@@ -464,3 +472,4 @@ sensorModuleNumber=4
 
 WatermarkVersion=3.002
 FilterVersion=3.002
+previewPriority=100
